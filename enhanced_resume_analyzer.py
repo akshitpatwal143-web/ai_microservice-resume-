@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict,Union
 from google import genai
 import os
 import json
@@ -45,7 +45,7 @@ class JobOpportunity(BaseModel):
 class ChainOfThought(BaseModel):
     step: str
     reasoning: str
-    findings: str
+    findings: Union[str, dict, list]
 
 class EnhancedResumeAnalysis(BaseModel):
     skills: List[str]
@@ -256,7 +256,7 @@ Return ONLY valid JSON.
 """
         
         trend_response = client.models.generate_content(
-            model="gemini-2.0-flash-exp",
+            model=os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
             contents=trend_prompt
         )
         trend_output = re.sub(r"```json|```", "", trend_response.text).strip()
