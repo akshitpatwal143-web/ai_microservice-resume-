@@ -201,7 +201,7 @@ IMPORTANT:
     
     try:
         response = client.models.generate_content(
-            model=os.getenv("GEMINI_MODEL", "gemini-2.0-flash"),
+            model=os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
             contents=analysis_prompt
         )
         ai_output = response.text
